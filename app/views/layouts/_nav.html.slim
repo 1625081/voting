@@ -1,13 +1,11 @@
 .ui.black.inverted.menu.top-bar style="text-align:left;"
   .container
-    a.logo.item href='/'
-      img src="/logo.png"
     a class="item #{'active' if action_name == 'index' && controller_name == 'home'}" href='/'
       i.home.icon
       | 首页
-    = link_to timeline_path, :class => "item #{'active' if action_name == 'timeline' && controller_name == 'home'}"
+    = link_to timeline_path, :target=>"_blank" ,:class => "item #{'active' if action_name == 'timeline' && controller_name == 'home'}" 
       i.globe.basic.icon
-      | 时间轴
+      | 看看老师们
     .item.hide-when-small
       .ui.icon.input
         form action="/timeline" role="search"
@@ -21,26 +19,10 @@
           .ui.dropdown.item
             i.add.icon
             .menu
-              - if can? :create, :image
-                = link_to new_image_path, class: "item"
-                  i.photo.icon
-                  | 上传照片
               - if can? :create, :video
                 = link_to new_video_path, class: "item"
-                  i.video.icon
-                  | 上传视频
-              - if can? :create, :dmvideo
-                = link_to new_dmvideo_path, class: "item"
-                  i.video.icon
-                  | 上传弹幕视频
-              - if can? :create, :music
-                = link_to new_music_path, class: "item"
-                  i.unmute.icon
-                  | 上传音频
-              - if can? :create, :article
-                = link_to new_article_path, class: "item"
-                  i.font.icon
-                  |  撰写文章
+                  i.add.user.icon
+                  | 新建老师信息
         .ui.dropdown.item
           i.setting.icon
           .menu

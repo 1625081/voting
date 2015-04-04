@@ -2,21 +2,16 @@
   - if current_user.power == "admin"|| current_user.power == "leader"||current_user.power == "editor" 
     - if current_user.forbidden? == false  
       = form_for @video, html: { :class => "ui raised segment" } do |f|
-        .ui.ribbon.label.red.uppot = "转载视频"
+        .ui.ribbon.label.red.uppot = "管理员操作"
         .ui.center.aligned.segment.upload-area
           .ui.icon.header#empty-status
             i.cloud.upload.icon
-            = "转载视频"
+            = "新建老师信息"
           br
           .ui.input
-            = f.text_field :title, placeholder: "标题"
+            = f.text_field :title, placeholder: "老师姓名"
           br
           .ui.divider
-          br
-          .ui.input
-            = f.text_field :youkuid ,placeholder: "优酷视频id"
-          br
-           .ui.button [class="large ui button"  onclick="window.location.href='/youku/'"] 本地直传到优酷 
           br 
           .des_field
             =f.text_area :des 
@@ -24,14 +19,14 @@
               window.base.Simditor $('textarea'), can_upload=true
           hr
           .ui.input.thumb
-            = "上传视频封面:"
+            = "上传老师照片:"
             = f.file_field :cover        
           .field
-            = f.submit :class => "ui black button"
+            = f.submit :value => "Create Teacher",:class => "ui black button" 
     - else
       | 尊敬的摸Mo用户，为了方便摸平台的管理，我们不允许30分钟内资源多次上传，谢谢配合！
       br
-      |  by 站长--三金
+      |  by 站长--ZSJ
   - else
     = current_user.power
     | ,you don't have the permission!

@@ -11,36 +11,39 @@ class HomeController < ApplicationController
   end
   
   def timeline
+    if current_user
+      if current_user.is_verify?
+
+      else
+        respond_to do |format|
+          format.html{
+           redirect_to home_path , notice:"请先完成认证再来投票哦～"
+         }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html{
+          redirect_to home_path , notice:"请先完成认证再来投票哦～"
+        }
+      end
+    end
+
     if params[:search]
       @sitems = []
       @items = []
-      @sitems += Image.all
-      @sitems += Music.all
       @sitems += Video.all
-      @sitems += Article.all
       for sitem in @sitems 
         msplit = sitem.title.split(params[:search],2) 
         if msplit[0] !=  sitem.title
-           if sitem.mo_item[:class] == "Music" 
-              @items += Music.where("title = ?",sitem.title)
-            end
-            if sitem.mo_item[:class] == "Article" 
-              @items += Article.where("title = ?",sitem.title)
-            end
             if sitem.mo_item[:class] == "Video" 
               @items += Video.where("title = ?",sitem.title)
-            end
-            if sitem.mo_item[:class] == "Image" 
-              @items += Image.where("title = ?",sitem.title)
             end
         end
       end 
     else
       @items = []
-      @items += Image.all
-      @items += Music.all
       @items += Video.all
-      @items += Article.all
     end
   end
 
