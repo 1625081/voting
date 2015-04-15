@@ -1,0 +1,9 @@
+p#notice = notice
+
+p
+  strong Pku:
+  = @tempuser.pku_id
+
+= link_to 'Edit', edit_tempuser_path(@tempuser)
+'|
+= link_to 'Back', tempusers_path

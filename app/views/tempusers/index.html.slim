@@ -1,0 +1,21 @@
+h1 Listing tempusers
+
+table
+  thead
+    tr
+      th Pku
+      th
+      th
+      th
+
+  tbody
+    - @tempusers.each do |tempuser|
+      tr
+        td = tempuser.pku_id
+        td = link_to 'Show', tempuser
+        td = link_to 'Edit', edit_tempuser_path(tempuser)
+        td = link_to 'Destroy', tempuser, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Tempuser', new_tempuser_path

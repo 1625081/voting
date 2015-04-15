@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
+  resources :tempusers
+
   resources :dmvideos
   resources :articles
 
   resources :images
 
-  resources :musics do
-    resources :comments
-  end
+  resources :musics 
+
   resources :videos do
     resources :comments
   end
+  
   get 'youku' => 'videos#upload', as: :upload_to_youku
 
 

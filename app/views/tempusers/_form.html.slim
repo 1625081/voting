@@ -1,0 +1,12 @@
+= form_for @tempuser do |f|
+  - if @tempuser.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@tempuser.errors.count, "error")} prohibited this tempuser from being saved:"
+      ul
+        - @tempuser.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :pku_id
+    = f.text_field :pku_id
+  .actions = f.submit 'Save'

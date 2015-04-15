@@ -12,8 +12,8 @@ class HomeController < ApplicationController
   
   def timeline
     if current_user
-      if current_user.is_verify?
-
+      if current_user.is_verify? || current_user.power == "admin"
+         @secret = Digest::MD5.hexdigest(Digest::SHA1.hexdigest(Base64::encode64(Rails.application.secrets.angular_secret)))
       else
         respond_to do |format|
           format.html{
@@ -21,7 +21,9 @@ class HomeController < ApplicationController
          }
         end
       end
-    else
+    elsif session[:cas_user]
+       @secret = Digest::MD5.hexdigest(Digest::SHA1.hexdigest(Base64::encode64(Rails.application.secrets.angular_secret)))
+    else  
       respond_to do |format|
         format.html{
           redirect_to home_path , notice:"请先完成认证再来投票哦～"

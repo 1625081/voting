@@ -39,21 +39,24 @@ class ProfileController < ApplicationController
   end
  
   def verify_identity
-    @user = User.where('id = ?', require_to_verify).last
-    if @user
-      if session[:cas_user]
-        @user.pku_id = session[:cas_user]
-        if @user.save
-          redirect_to edit_user_registration_path, info: '用户认证成功！'
+    if session[:cas_user]
+        if Tempuser.find_by(pku_id: session[:cas_user])
+          current_user = @tempuser 
+          respond_to do |format|
+            format.html {redirect_to home_path(current_user), notice: '用户认证成功！' }
+          end
         else
-          raise UnknownError
+          @tempuser = Tempuser.new(pku_id: session[:cas_user])
+          @tempuser.save
+          current_user = @tempuser
+          respond_to do |format|
+            format.html {redirect_to home_path(current_user), notice: '用户认证成功！' }
+          end
         end
-      else
-        raise UnableToVerify
-      end
     else
-      raise WrongParamError
+      raise UnableToVerify
     end
+  
   end
 
   def edit

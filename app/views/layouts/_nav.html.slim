@@ -34,6 +34,12 @@
               | 用户信息设置
         = link_to destroy_user_session_path, class: "item", :method => :delete
           i.sign.out.icon
+      
+      - elsif session[:cas_user]
+        .item.user-info
+          i.user.icon
+          = session[:cas_user]
+      
       - else
         .item
           a.ui.green.button#confirm-sign-up-button 注册
@@ -41,8 +47,8 @@
           | 登录
           i.icon.dropdown
           .menu
-            .item 使用北附人账号登录
-            a.item href="/users/sign_in" 直接登录
+            a.item href="/verify" 内网登陆
+            a.item href="/users/sign_in" 使用摸账号登陆
 - unless current_user
   .ui.dimmer.page.hidden
     .ui.basic.modal.transition.scrolling#confirm-sign-up
@@ -50,11 +56,11 @@
         | 你确定要注册？
       .actions
         .two.fluid.ui.buttons
-          .ui.negative.labeled.icon.button
-            i.remove.icon
-            | 已拥有北附人账号，返回登录
+          a.ui.negative.labeled.icon.button href='/verify' 
+            i.remove.icon 
+            | 其实我愿意用内网账号
           a.ui.positive.right.labeled.icon.button href='/users/sign_up'
-            | 我没有北附人账号，确定注册
+            | 我愿意试试用户系统
             i.checkmark.icon
 
   javascript:

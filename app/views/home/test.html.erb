@@ -8,7 +8,12 @@
         <h1 class="ui inverted header" id="headpot">
           北大附中高中教师评价系统
         </h1>
-        <% if current_user&&current_user.is_verify? %>
+        <% if current_user&&current_user.pku_id %>
+          <div class="large basic inverted animated fade ui button" id="followheadpot">
+           <div class="visible content">参与投票</div>
+           <a href="/timeline" target="_blank"><div class="hidden content">Now</div></a>
+          </div>
+        <% elsif session[:cas_user] %>
           <div class="large basic inverted animated fade ui button" id="followheadpot">
            <div class="visible content">参与投票</div>
            <a href="/timeline" target="_blank"><div class="hidden content">Now</div></a>

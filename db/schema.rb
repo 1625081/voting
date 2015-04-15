@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206144303) do
+ActiveRecord::Schema.define(version: 20150411041134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20141206144303) do
     t.integer  "music_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pku_id"
   end
 
   add_index "comments", ["article_id"], name: "index_comments_on_article_id", using: :btree
@@ -108,6 +109,12 @@ ActiveRecord::Schema.define(version: 20141206144303) do
   end
 
   add_index "scores", ["article_id"], name: "index_scores_on_article_id", using: :btree
+
+  create_table "tempusers", force: true do |t|
+    t.string   "pku_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "thumbs", force: true do |t|
     t.string   "file"
