@@ -4,12 +4,6 @@ window.App.controller 'ScoreController', [
 	'$filter', 
 	'$window',
 	($scope, $http, $filter, $window) ->
-		rails_data = $("article .angular-data")
-		$scope.id = rails_data.data 'score-id'
-		$scope.secret = rails_data.data 'secret'
-		console.log($scope.secret)
-		$scope.login = rails_data.data 'login'
-		$scope.has_like = $('article #action_control').data 'like'
 		$scope.get_score = () ->
 			$http
 					method: 'GET'
@@ -83,6 +77,7 @@ window.App.controller 'ScoreController', [
 					$scope.has_favor = false
 
 		$scope.do_like = () ->
+			console.log($scope)
 			switch $scope.has_like
 				when true then $scope.unlike()
 				when false then $scope.like()

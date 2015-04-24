@@ -2,6 +2,7 @@ class Video < ActiveRecord::Base
   mount_uploader :cover, ThumbUploader
   has_one :score
   has_one :thumb
+  has_many :votes
   belongs_to :user
   has_many :comments, dependent: :destroy
   

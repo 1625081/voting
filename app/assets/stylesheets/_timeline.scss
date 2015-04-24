@@ -126,21 +126,20 @@
 					top: -7px;
 				}
 			}
+			.timeform{
+				margin-bottom: -50px;
+			}
+			.timechat{
+				padding-left:100px;
+				margin-top: 11px;
+			}
 			.actions {
 				display: inline-block;
 				font-size: 14px;
-				float: right;
 				padding: 14px;
 				padding-top: 5px;
 				font-family: MyriadSetPro-Ultralight,arial,sans-serif !important;
-				a {
-					margin-right: 10px;
-					position: relative;
-					top: 14px;
-				}
-				a:last-child {
-					margin-right: 0;
-				}
+				
 			}
 		}
 

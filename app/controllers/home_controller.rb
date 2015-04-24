@@ -42,10 +42,12 @@ class HomeController < ApplicationController
               @items += Video.where("title = ?",sitem.title)
             end
         end
-      end 
+      end
+      @current_items = @items.sort{|e,f| e.mo_item[:score][:like] <=> f.mo_item[:score][:like]}.reverse 
     else
       @items = []
       @items += Video.all
+      @current_items = @items.sort{|e,f| e.mo_item[:score][:like] <=> f.mo_item[:score][:like]}.reverse
     end
   end
 

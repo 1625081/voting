@@ -1,32 +1,35 @@
-.timeline ng-controller="ScoreController as score"
+.timeline
   .login_header
     .actions
     .notification
-  - @current_items = @items.sort{|e,f| e.mo_item[:score][:like] <=> f.mo_item[:score][:like]}.reverse
-  - for item in @current_items
+  - for @item in @current_items
     .feed-item
       article.timecontent  
-        .angular-data data-score-id="#{item.mo_item[:score][:id]}" data-secret="#{@secret}" data-login="#{(current_user)?(true):(false)}"
-          .ui.ribbon.label.red = item.mo_item[:title]
-          a.thumb href="#{item.mo_item[:url][:show]}" data-no-turbolink='true'
-              - if "#{item.mo_item[:thumb]}" == "#{item.mo_item[:thumbnil]}"
-                img src="/noimg.jpeg"
-              - else
-                img src="#{item.mo_item[:thumb]}"
-          .info
-            h4.title 
-              a href="#{item.mo_item[:url][:show]}" data-no-turbolink='true'
-                = item.mo_item[:title]
-            .sub-title == item.mo_item[:sub_title]
-          .actions
-            #action_control.ui.buttons data-user-id="#{current_user.id}"  data-like="#{current_user.like? item}"
-            - if current_user.like? item
-              a.like.ui.icon.blue.button.active.youtube#like ng-click="do_like()"
-                i.icon.thumbs.up = item.mo_item[:score][:like]
+        .ui.ribbon.label.red = @item.mo_item[:title]
+        a.thumb href="#{@item.mo_item[:url][:show]}" data-no-turbolink='true'
+            - if "#{@item.mo_item[:thumb]}" == "#{@item.mo_item[:thumbnil]}"
+              img src="/noimg.jpeg"
             - else
-              a.like.ui.icon.button.youtube#like ng-click="do_like()"
-                i.icon.thumbs.up = item.mo_item[:score][:like]
-            a.comments 
-              i.icon.comment.outline
-              = item.comments.size
+              img src="#{@item.mo_item[:thumb]}"
+        .info
+          h4.title 
+            a href="#{@item.mo_item[:url][:show]}" data-no-turbolink='true'
+              = @item.mo_item[:title]
+          .sub-title == @item.mo_item[:sub_title]
+        .actions
+            - if current_user.like? @item
+              .timeform
+                  - @vote = Vote.where("pku_id = ?" , current_user.pku_id).last
+                  = link_to "赞  #{@item.votes.size}", [@vote.video,@vote], method: :delete, data: { confirm: '取消投票?' } ,:class=>'ui blue button'
+            - else
+             .timeform
+               = form_for [@item, @item.votes.build(:pku_id => "#{current_user.pku_id}")],:class =>'timeform' do |f|
+                  = f.hidden_field :pku_id 
+                  br
+                  = submit_tag "赞  #{@item.votes.size - 1}", :class => 'ui red button'
+            .timechat
+              a href="/videos/#{@item.id}"
+                .ui.button.black
+                 i.icon.comment.outline
+                 = @item.comments.size
 script src="/waterfall.js"

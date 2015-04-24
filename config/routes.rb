@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :videos do
     resources :comments
+    resources :votes
   end
   
   get 'youku' => 'videos#upload', as: :upload_to_youku
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
   get 'list' => "profile#list"
 
   root 'home#test',as: :home
-  get 'timeline' => 'home#timeline'
+  get 'timeline' => 'home#timeline',as: :timeline
 
   
   get 'upload' => 'videos#upload'

@@ -100,6 +100,22 @@ class User < ActiveRecord::Base
     something.score.liker.include? id
   end
 
+  def like(something)
+    @score = something.score
+    @score.liker += [id]
+    @score.liker.uniq!
+    @score.score = @score.generate_score
+    @score.save
+  end
+  
+  def unlike(something)
+    @score = something.score
+    @score.liker -= [id]
+    @score.liker.uniq!
+    @score.score = @score.generate_score
+    @score.save
+  end
+
   def favor?(something)
     something.score.favor.include? id
   end
