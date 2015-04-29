@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   around_action :rescue_errors, only: :api_info
   helper_method :init_token
+  helper_method :current_tempuser
 
   def api_info(params)
     if params["timestamp"]
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
       raise UnknowError
     end
   end
+
+  def current_tempuser
+    @current_tempuser ||= Tempuser.find_by_auth_token!(cookies[:auth_token]) if cookies[:auth_token]
+  end
+
 
   def rescue_errors
     begin

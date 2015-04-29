@@ -17,15 +17,15 @@
               = @item.mo_item[:title]
           .sub-title == @item.mo_item[:sub_title]
         .actions
-            - if current_user.like? @item
+            - if current_tempuser.like? @item
               .timeform
                 div id="vote_no_#{@item.id}"
-                  - @vote = Vote.where("pku_id = ?" , current_user.pku_id).last
+                  - @vote = Vote.where("pku_id = ?" , current_tempuser.pku_id).last
                   = link_to "赞  #{@item.votes.size}", [@vote.video,@vote], method: :delete, data: { confirm: '取消投票?' } ,:class=>'ui blue button'
             - else
              .timeform
                div id="vote_no_#{@item.id}"
-                = form_for [@item, @item.votes.build(:pku_id => "#{current_user.pku_id}")],:class =>'timeform',:remote => true do |f|
+                = form_for [@item, @item.votes.build(:pku_id => "#{current_tempuser.pku_id}")],:class =>'timeform',:remote => true do |f|
                   = f.hidden_field :pku_id 
                   br
                   = submit_tag "赞  #{@item.votes.size - 1}", :class => 'ui red button'

@@ -41,14 +41,14 @@ class ProfileController < ApplicationController
   def verify_identity
     if session[:cas_user]
         if Tempuser.find_by(pku_id: session[:cas_user])
-          current_user = @tempuser 
+          cookies[:auth_token] = @tempuser.auth_token 
           respond_to do |format|
             format.html {redirect_to home_path(current_user), notice: '用户认证成功！' }
           end
         else
           @tempuser = Tempuser.new(pku_id: session[:cas_user])
           @tempuser.save
-          current_user = @tempuser
+          cookies[:auth_token] = @tempuser.auth_token
           respond_to do |format|
             format.html {redirect_to home_path(current_user), notice: '用户认证成功！' }
           end

@@ -1,20 +1,21 @@
 class TempusersController < ApplicationController
-  before_action :set_tempuser, only: [:show, :edit, :update, :destroy]
+  before_action :set_tempuser, only: [:show]
 
   # GET /tempusers
   # GET /tempusers.json
   def index
-    @tempusers = Tempuser.all
+    redirect_to home_path
   end
 
   # GET /tempusers/1
   # GET /tempusers/1.json
   def show
+    redirect_to home_path
   end
 
   # GET /tempusers/new
   def new
-    @tempuser = Tempuser.new
+    redirect_to home_path
   end
 
   # GET /tempusers/1/edit

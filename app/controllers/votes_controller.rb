@@ -3,11 +3,15 @@ class VotesController < ApplicationController
  def create
   if params[:video_id]
   	@element = Video.find(params[:video_id])
-  	@voter = User.where("pku_id = ?",vote_params[:pku_id]).last
-  	@voter.like(@element)
-  	@vote = @element.votes.create(vote_params)
-  	respond_to do |f|
-        f.js
+  	@voter = Tempuser.where("pku_id = ?",vote_params[:pku_id]).last
+  	if @voter
+      @voter.like(@element)
+  	  @vote = @element.votes.create(vote_params)
+  	   respond_to do |f|
+         f.js
+       end
+     else
+      redirect_to timeline_path , notice: '投票失败，错误未知！'
      end
   end
  end
@@ -16,12 +20,16 @@ class VotesController < ApplicationController
  	if params[:video_id]
       @element = Video.find(params[:video_id])
       @vote = @element.votes.find(params[:id])
-      @voter = User.where("pku_id = ?",@vote.pku_id).last
-  	  @voter.unlike(@element)
-  	  @vote.destroy
-  	  @element.save
-      redirect_to timeline_path , notice: '投票已取消！'
-    end
+      @voter = Tempuser.where("pku_id = ?",@vote.pku_id).last
+  	  if @voter 
+       @voter.unlike(@element)
+  	   @vote.destroy
+  	   @element.save
+       redirect_to timeline_path , notice: '投票已取消！'
+      else
+        redirect_to timeline_path , notice: '取消失败，错误未知！'
+      end
+  end
  end
 
  private
