@@ -22,13 +22,13 @@
               
 - if current_user
   - if can? :create, :comment
-    .replyme
+    .replyme.ui.form.segment
       h2 发表匿名评论
       = form_for [@element, @element.comments.build],remote: true do |f|
        .field
          = f.label "说点什么吧~~" 
          br
-         = f.text_area :content
+         .area = f.text_area :content
        .actions = submit_tag '发表' ,:class => 'ui blue button'  
 
 .replies

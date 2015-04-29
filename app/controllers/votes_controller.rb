@@ -5,10 +5,10 @@ class VotesController < ApplicationController
   	@element = Video.find(params[:video_id])
   	@voter = User.where("pku_id = ?",vote_params[:pku_id]).last
   	@voter.like(@element)
-  	@voter.save
   	@vote = @element.votes.create(vote_params)
-  	@element.save
-  	redirect_to timeline_path , notice: '投票成功！'
+  	respond_to do |f|
+        f.js
+     end
   end
  end
 

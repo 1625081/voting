@@ -19,11 +19,13 @@
         .actions
             - if current_user.like? @item
               .timeform
+                div id="vote_no_#{@item.id}"
                   - @vote = Vote.where("pku_id = ?" , current_user.pku_id).last
                   = link_to "赞  #{@item.votes.size}", [@vote.video,@vote], method: :delete, data: { confirm: '取消投票?' } ,:class=>'ui blue button'
             - else
              .timeform
-               = form_for [@item, @item.votes.build(:pku_id => "#{current_user.pku_id}")],:class =>'timeform' do |f|
+               div id="vote_no_#{@item.id}"
+                = form_for [@item, @item.votes.build(:pku_id => "#{current_user.pku_id}")],:class =>'timeform',:remote => true do |f|
                   = f.hidden_field :pku_id 
                   br
                   = submit_tag "赞  #{@item.votes.size - 1}", :class => 'ui red button'

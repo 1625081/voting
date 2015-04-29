@@ -1,0 +1,2 @@
+<% @item = vote.video %>
+<%= link_to "赞 #{@item.votes.size}", [vote.video,vote], method: :delete, data: { confirm: '取消投票?' } ,:class=>'ui blue button' %>

@@ -1,10 +1,11 @@
-<p>
-  <strong>Commenter:</strong>
+<div class="avatar">
+  <img src="/avatar.jpg" class="image-circle">
+</div>
+ <div class="body">
   <%= comment.content %>
-</p>
- 
-<p>
-  <%= link_to 'Destroy Comment', [comment.video, comment],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-</p>
+  <p>
+  	<%= link_to 'Destroy Comment', [comment.video, comment],
+     	          method: :delete,
+     	          data: { confirm: 'Are you sure?' } %>
+  </p>
+ </div>
